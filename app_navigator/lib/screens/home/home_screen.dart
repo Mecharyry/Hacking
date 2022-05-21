@@ -3,10 +3,11 @@ import 'package:app_navigator/screens/home/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../navigation/typedefs.dart';
 import '../../utilities/doNothing.dart';
 
 class HomeScreen extends StatelessWidget {
-  static MapEntry<String, Widget Function(BuildContext)> route = MapEntry(
+  static RouteEntry route = RouteEntry(
     '/',
     (context) => const HomeScreen._(),
   );

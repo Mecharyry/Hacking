@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../navigation/typedefs.dart';
+
 class SettingsScreen extends StatelessWidget {
-  static MapEntry<String, Widget Function(BuildContext)> route = MapEntry(
+  static RouteEntry route = RouteEntry(
     '/settings',
     (context) => const SettingsScreen._(),
   );
