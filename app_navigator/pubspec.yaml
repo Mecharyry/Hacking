@@ -1,7 +1,7 @@
 name: app_navigator
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -9,17 +9,18 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
+  bloc: ^8.0.3
+  cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
+  freezed_annotation: ^2.0.3
 
 dev_dependencies:
+  build_runner: ^2.1.11
+  flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-
-  flutter_lints: ^2.0.0
+  freezed: ^2.0.3+1
 
 flutter:
-
   uses-material-design: true
