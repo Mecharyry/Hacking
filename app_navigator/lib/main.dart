@@ -1,7 +1,6 @@
+import 'package:app_navigator/screens/home/home_screen.dart';
+import 'package:app_navigator/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
-
-import 'screens/home/home_screen.dart';
-import 'screens/settings/settings_screen.dart';
 
 void main() {
   runApp(const _AppNavigatorApp());
