@@ -6,7 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../utilities/doNothing.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  static MapEntry<String, Widget Function(BuildContext)> route = MapEntry(
+    '/',
+    (context) => const HomeScreen._(),
+  );
+
+  const HomeScreen._({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

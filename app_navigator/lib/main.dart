@@ -17,10 +17,10 @@ class _AppNavigatorApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/',
-      routes: {
-        '/': (context) => const HomeScreen(),
-        '/settings': (context) => const SettingsScreen(),
-      },
+      routes: Map.fromEntries([
+        HomeScreen.route,
+        SettingsScreen.route,
+      ]),
     );
   }
 }
