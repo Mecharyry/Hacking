@@ -16,7 +16,7 @@ class _AppNavigatorApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: HomeScreen.route.key,
       routes: Map.fromEntries([
         HomeScreen.route,
         SettingsScreen.route,

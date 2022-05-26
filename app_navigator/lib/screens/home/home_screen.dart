@@ -26,7 +26,10 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocProvider(create: (_) => HomeCubit()..loadData(), child: const _Body()),
+      body: BlocProvider(
+        create: (_) => HomeCubit()..loadData(),
+        child: const _Body(),
+      ),
     );
   }
 }
