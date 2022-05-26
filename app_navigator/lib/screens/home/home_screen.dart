@@ -1,3 +1,4 @@
+import 'package:app_navigator/bottom_sheets/test_bottom_sheet.dart';
 import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_cubit.dart';
 import 'package:app_navigator/screens/home/home_state.dart';
@@ -58,7 +59,10 @@ class _Body extends StatelessWidget {
             listener: (context, state) => state.maybeWhen(
               showBanner: (message) => _showBanner(context, message),
               showDialog: (message) => _showDialog(context, message),
-              showBottomSheet: (message) => _showBottomSheet(context, message),
+              showBottomSheet: (message) => getIt<AppNavigator>().pushBottomSheet(
+                testBottomSheet.key,
+                arguments: message,
+              ),
               orElse: () => doNothing('Other states are not handled'),
             ),
             buildWhen: (_, current) => current.maybeMap(
