@@ -1,10 +1,13 @@
+import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_cubit.dart';
 import 'package:app_navigator/screens/home/home_state.dart';
+import 'package:app_navigator/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../navigation/typedefs.dart';
-import '../../utilities/doNothing.dart';
+import '../../utilities/do_nothing.dart';
+import '../../utilities/injection.dart';
 
 class HomeScreen extends StatelessWidget {
   static RouteEntry route = RouteEntry(
@@ -21,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('App Navigtor: The Problem'),
         actions: [
           IconButton(
-            onPressed: () => Navigator.pushNamed(context, '/settings'),
+            onPressed: () => getIt<AppNavigator>().navigateTo(SettingsScreen.route.key),
             icon: const Icon(Icons.settings),
           ),
         ],
