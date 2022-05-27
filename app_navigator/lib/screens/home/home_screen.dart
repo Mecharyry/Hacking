@@ -1,3 +1,4 @@
+import 'package:app_navigator/bottom_sheets/bottom_sheets_navigation.dart';
 import 'package:app_navigator/bottom_sheets/test_bottom_sheet.dart';
 import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_cubit.dart';
@@ -60,7 +61,7 @@ class _Body extends StatelessWidget {
               showBanner: (message) => _showBanner(context, message),
               showDialog: (message) => _showDialog(context, message),
               showBottomSheet: (message) => getIt<AppNavigator>().pushBottomSheet(
-                testBottomSheet.key,
+                BottomSheetRoute.home(),
                 arguments: message,
               ),
               orElse: () => doNothing('Other states are not handled'),

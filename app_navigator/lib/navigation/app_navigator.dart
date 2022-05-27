@@ -9,11 +9,11 @@ class AppNavigator {
   void navigateTo<T extends Object?>(String routeName, {Object? arguments}) =>
       navigatorKey.currentState?.pushNamed(routeName, arguments: arguments);
 
-  Future<T?> pushBottomSheet<T>(String routeName, {Object? arguments}) async {
+  Future<T?> pushBottomSheet<T>(BottomSheetRoute route, {Object? arguments}) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing bottom sheet');
 
-    final builder = _bottomSheetRoute.lookupRouteByName(routeName);
-    assert(builder != null, 'BottomSheetRoute does not contain a route with the name: $routeName');
+    final builder = _bottomSheetRoute.lookupRouteByName(route);
+    assert(builder != null, 'BottomSheetRoute does not contain a route with the name: $route');
 
     return await showModalBottomSheet(
       context: navigatorKey.currentContext!,
