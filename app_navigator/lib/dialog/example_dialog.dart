@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ExampleDialog extends StatelessWidget {
+  static WidgetBuilder exampleDialog = (context) {
+    final message = ModalRoute.of(context)!.settings.arguments as String;
+    return ExampleDialog._(message: message);
+  };
+
   final String _message;
 
-  const ExampleDialog({Key? key, required String message})
+  const ExampleDialog._({Key? key, required String message})
       : _message = message,
         super(key: key);
 
