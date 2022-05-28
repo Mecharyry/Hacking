@@ -5,8 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'bottom_sheet_navigation.freezed.dart';
 
-typedef BottomSheetEntries = Map<BottomSheetRoute, WidgetBuilder>;
-
 class BottomSheetRoutes {
   WidgetBuilder? lookupRouteByName(BottomSheetRoute route) => route.when(
         example: (_) => exampleBottomSheet,
