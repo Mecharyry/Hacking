@@ -291,8 +291,18 @@ getIt<AppNavigator>().pushBottomSheet(BottomSheetRoute.example(message: 'Hi!'));
 The added benefit is now we can pass in our arguments as part of the union to have more of a guarantee around type safety 😄 and we can remove one of the asserts! Our `WidgetBuilder` will never be `null` now!
 
 
+What’s Next?
 
+So I’ve been looking into web apps and have started writing my own and the above strategy definitely does not work 😭  we need a better way to deal with route updates via the address bar and page refreshes 😬
 
-_Got any questions, criticisms or coding challenges for me. Reach out_ 😄
+The Flutter team has a Router API which should offer a solution, here. I’m going to attempt to implement a version of this router that still holds the following to be true:
 
-_RyRy_
+We need to be able to manipulate the Navigator without first needing to obtain it with a BuildContext.
+
+Type safety enforcement through union / sealed classes
+
+Page construction is hidden away from the consumer of the navigator. i.e. they navigate by passing either a union or String
+
+But until then, you can feel free to reach out to me with questions, criticisms, coding challenges or just a general chat.
+
+RyRy 💛
