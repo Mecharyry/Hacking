@@ -1,4 +1,3 @@
-import 'package:app_navigator/banner/example_banner.dart';
 import 'package:app_navigator/snackbar/example_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
