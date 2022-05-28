@@ -1,3 +1,4 @@
+import 'package:app_navigator/banner/banner_navigation.dart';
 import 'package:app_navigator/bottom_sheet/bottom_sheet_navigation.dart';
 import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_cubit.dart';
@@ -58,7 +59,7 @@ class _Body extends StatelessWidget {
               orElse: () => false,
             ),
             listener: (context, state) => state.maybeWhen(
-              showBanner: (message) => _showBanner(context, message),
+              showBanner: (message) => getIt<AppNavigator>().pushBanner(BannerRoute.example(message)),
               showDialog: (message) => getIt<AppNavigator>().pushDialog(dialog.DialogRoute.example(message)),
               showBottomSheet: (message) => getIt<AppNavigator>().pushBottomSheet(BottomSheetRoute.example(message)),
               orElse: () => doNothing('Other states are not handled'),
@@ -73,30 +74,6 @@ class _Body extends StatelessWidget {
               orElse: () => const _LoadedWidget(),
             ),
           )
-        ],
-      ),
-    );
-  }
-
-  void _showBanner(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showMaterialBanner(
-      MaterialBanner(
-        backgroundColor: Colors.amber,
-        content: SizedBox(
-          height: 50,
-          child: Center(child: Text(message)),
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Hey! I'm a snackbar called from a banner!")),
-            ),
-            child: const Text('Show snackbar'),
-          ),
-          ElevatedButton(
-            onPressed: () => ScaffoldMessenger.of(context).hideCurrentMaterialBanner(),
-            child: const Text('Dismiss'),
-          ),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:app_navigator/banner/banner_navigation.dart';
 import 'package:app_navigator/bottom_sheet/bottom_sheet_navigation.dart';
 import 'package:app_navigator/dialog/dialog_navigation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final BottomSheetRoutes _bottomSheetRoute = BottomSheetRoutes();
   final DialogRoutes _dialogRoutes = DialogRoutes();
+  final BannerRoutes _bannerRoutes = BannerRoutes();
 
   void navigateTo<T extends Object?>(String routeName, {Object? arguments}) =>
       navigatorKey.currentState?.pushNamed(routeName, arguments: arguments);
@@ -30,11 +32,18 @@ class AppNavigator {
 
     final builder = _dialogRoutes.lookupRouteByName(route);
 
-    return await showModalBottomSheet(
+    return await showDialog(
       context: navigatorKey.currentContext!,
       builder: builder!,
       routeSettings: RouteSettings(arguments: route.message),
-      isScrollControlled: true,
     );
+  }
+
+  Future<void> pushBanner<T>(BannerRoute route) async {
+    assert(navigatorKey.currentContext != null, 'navigation context is null when pushing dialog');
+
+    final builder = _bannerRoutes.lookupRouteByName(route);
+
+    ScaffoldMessenger.of(navigatorKey.currentContext!).showMaterialBanner(builder(navigatorKey.currentContext!));
   }
 }
