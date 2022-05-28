@@ -291,7 +291,7 @@ getIt<AppNavigator>().pushBottomSheet(BottomSheetRoute.example(message: 'Hi!'));
 The added benefit is now we can pass in our arguments as part of the union to have more of a guarantee around type safety 😄 and we can remove one of the asserts! Our `WidgetBuilder` will never be `null` now!
 
 
-What’s Next?
+## What’s Next?
 
 So I’ve been looking into web apps and have started writing my own and the above strategy definitely does not work 😭  we need a better way to deal with route updates via the address bar and page refreshes 😬
 
