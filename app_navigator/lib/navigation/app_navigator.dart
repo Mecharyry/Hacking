@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:app_navigator/dialog/dialog_navigation.dart' as dialog;
 
+import '../screens/screen_navigation.dart';
+
 class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final BottomSheetRoutes _bottomSheetRoute = BottomSheetRoutes();
@@ -12,8 +14,11 @@ class AppNavigator {
   final BannerRoutes _bannerRoutes = BannerRoutes();
   final SnackbarRoutes _snackbarRoutes = SnackbarRoutes();
 
-  void navigateTo<T extends Object?>(String routeName, {Object? arguments}) =>
-      navigatorKey.currentState?.pushNamed(routeName, arguments: arguments);
+  Future<void> navigateTo<T extends Object?>(ScreenRoute route) async {
+    final builder = ScreenRoutes.lookupBuilderByRoute(route);
+
+    navigatorKey.currentState?.push(MaterialPageRoute(builder: builder));
+  }
 
   Future<T?> pushBottomSheet<T>(BottomSheetRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Bottom Sheet');

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_state.dart';
 import 'package:app_navigator/dialog/dialog_navigation.dart' as dialog;
+import 'package:app_navigator/screens/screen_navigation.dart';
 import 'package:bloc/bloc.dart';
 
 import '../../banner/banner_navigation.dart';
@@ -25,6 +26,8 @@ class HomeCubit extends Cubit<HomeState> {
   void showDialog() => _appNavigator.pushDialog(dialog.DialogRoute.example("Hey! I'm a dialog"));
 
   void showBottomSheet() => _appNavigator.pushBottomSheet(BottomSheetRoute.example("Hey! I'm a bottom sheet"));
+
+  void navigateToSettings() => _appNavigator.navigateTo(ScreenRoute.settings());
 
   Future<void> waitAndThenEmit(HomeState state) {
     return Future.delayed(const Duration(seconds: 2), () => emit(state));
