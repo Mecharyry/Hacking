@@ -1,5 +1,8 @@
+import 'package:app_navigator/snackbar/snackbar_navigation.dart';
+import 'package:app_navigator/utilities/injection.dart';
 import 'package:flutter/material.dart';
 
+import '../navigation/app_navigator.dart';
 import 'banner_navigation.dart';
 
 MaterialBannerBuilder exampleBanner = (context) {
@@ -12,8 +15,8 @@ MaterialBannerBuilder exampleBanner = (context) {
     ),
     actions: [
       ElevatedButton(
-        onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Hey! I'm a snackbar called from a banner!")),
+        onPressed: () => getIt<AppNavigator>().pushSnackbar(
+          SnackbarRoute.example("Hey! I'm a snackbar called from a banner!"),
         ),
         child: const Text('Show snackbar'),
       ),
