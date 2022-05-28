@@ -290,6 +290,9 @@ getIt<AppNavigator>().pushBottomSheet(BottomSheetRoute.example(message: 'Hi!'));
 
 The added benefit is now we can pass in our arguments as part of the union to have more of a guarantee around type safety 😄 and we can remove one of the asserts! Our `WidgetBuilder` will never be `null` now!
 
-Got any questions, criticisms or coding challenges for me. Reach out 😄
 
-RyRy
+
+
+_Got any questions, criticisms or coding challenges for me. Reach out_ 😄
+
+_RyRy_
