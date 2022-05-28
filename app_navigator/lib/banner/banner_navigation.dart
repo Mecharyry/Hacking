@@ -7,8 +7,8 @@ part 'banner_navigation.freezed.dart';
 typedef BannerBuilder = MaterialBanner Function(BuildContext);
 
 class BannerRoutes {
-  BannerBuilder lookupBuilderByRoute(BannerRoute route) => route.when(
-        example: (_) => exampleBanner,
+  MaterialBanner buildWidgetFromRoute(BuildContext context, BannerRoute route) => route.when(
+        example: (message) => exampleBanner(context, message),
       );
 }
 

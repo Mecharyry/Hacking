@@ -8,8 +8,8 @@ part 'snackbar_navigation.freezed.dart';
 typedef SnackbarBuilder = SnackBar Function(BuildContext);
 
 class SnackbarRoutes {
-  SnackbarBuilder lookupBuilderByRoute(SnackbarRoute route) => route.when(
-        example: (_) => exampleSnackbar,
+  SnackBar buildWidgetFromRoute(BuildContext context, SnackbarRoute route) => route.when(
+        example: (message) => exampleSnackbar(context, message),
       );
 }
 

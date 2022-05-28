@@ -35,24 +35,26 @@ class AppNavigator {
 
     return await showDialog(
       context: navigatorKey.currentContext!,
-      builder: builder!,
+      builder: builder,
       routeSettings: RouteSettings(arguments: route.message),
     );
   }
 
   Future<void> pushBanner<T>(BannerRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Banner');
+    BuildContext context = navigatorKey.currentContext!;
 
-    final builder = _bannerRoutes.lookupBuilderByRoute(route);
+    final banner = _bannerRoutes.buildWidgetFromRoute(context, route);
 
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showMaterialBanner(builder(navigatorKey.currentContext!));
+    ScaffoldMessenger.of(navigatorKey.currentContext!).showMaterialBanner(banner);
   }
 
   Future<void> pushSnackbar<T>(SnackbarRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Snackbar');
+    BuildContext context = navigatorKey.currentContext!;
 
-    final builder = _snackbarRoutes.lookupBuilderByRoute(route);
+    final snackbar = _snackbarRoutes.buildWidgetFromRoute(context, route);
 
-    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(builder(navigatorKey.currentContext!));
+    ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(snackbar);
   }
 }

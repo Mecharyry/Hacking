@@ -3,10 +3,8 @@ import 'package:app_navigator/utilities/injection.dart';
 import 'package:flutter/material.dart';
 
 import '../navigation/app_navigator.dart';
-import 'banner_navigation.dart';
 
-BannerBuilder exampleBanner = (context) {
-  final message = ModalRoute.of(context)!.settings.arguments as String;
+MaterialBanner Function(BuildContext, String) exampleBanner = (context, message) {
   return MaterialBanner(
     backgroundColor: Colors.amber,
     content: SizedBox(
