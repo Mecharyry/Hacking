@@ -9,7 +9,7 @@ class AppNavigator {
   void navigateTo<T extends Object?>(String routeName, {Object? arguments}) =>
       navigatorKey.currentState?.pushNamed(routeName, arguments: arguments);
 
-  Future<T?> pushBottomSheet<T>(BottomSheetRoute route, {Object? arguments}) async {
+  Future<T?> pushBottomSheet<T>(BottomSheetRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing bottom sheet');
 
     final builder = _bottomSheetRoute.lookupRouteByName(route);
@@ -18,7 +18,7 @@ class AppNavigator {
     return await showModalBottomSheet(
       context: navigatorKey.currentContext!,
       builder: builder!,
-      routeSettings: RouteSettings(arguments: arguments),
+      routeSettings: RouteSettings(arguments: route.message),
       isScrollControlled: true,
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-WidgetBuilder testBottomSheet = (context) {
+WidgetBuilder exampleBottomSheet = (context) {
   final args = ModalRoute.of(context)!.settings.arguments as String;
   return Container(
     height: 200,
