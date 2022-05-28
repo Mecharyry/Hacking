@@ -1,6 +1,5 @@
 import 'package:app_navigator/navigation/app_navigator.dart';
-import 'package:app_navigator/screens/home/home_screen.dart';
-import 'package:app_navigator/screens/settings/settings_screen.dart';
+import 'package:app_navigator/screens/screen_navigation.dart';
 import 'package:app_navigator/utilities/injection.dart';
 import 'package:flutter/material.dart';
 
@@ -21,11 +20,8 @@ class _AppNavigatorApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       navigatorKey: getIt<AppNavigator>().navigatorKey,
-      initialRoute: HomeScreen.route.key,
-      routes: Map.fromEntries([
-        HomeScreen.route,
-        SettingsScreen.route,
-      ]),
+      routes: ScreenRoutes.routes,
+      initialRoute: ScreenRoutes.initialRoute,
     );
   }
 }

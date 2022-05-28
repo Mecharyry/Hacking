@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../navigation/typedefs.dart';
-
 class SettingsScreen extends StatelessWidget {
-  static RouteEntry route = RouteEntry(
-    '/settings',
-    (context) => const SettingsScreen._(),
-  );
+  static WidgetBuilder builder = (context) => const SettingsScreen._();
 
   const SettingsScreen._({Key? key}) : super(key: key);
 
