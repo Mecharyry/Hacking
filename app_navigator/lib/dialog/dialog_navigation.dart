@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'dialog_navigation.freezed.dart';
 
 class DialogRoutes {
-  WidgetBuilder? lookupRouteByName(DialogRoute route) => route.when(
+  WidgetBuilder? lookupBuilderByRoute(DialogRoute route) => route.when(
         example: (_) => exampleBottomSheet,
       );
 }

@@ -18,7 +18,7 @@ class AppNavigator {
   Future<T?> pushBottomSheet<T>(BottomSheetRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Bottom Sheet');
 
-    final builder = _bottomSheetRoute.lookupRouteByName(route);
+    final builder = _bottomSheetRoute.lookupBuilderByRoute(route);
 
     return await showModalBottomSheet(
       context: navigatorKey.currentContext!,
@@ -31,7 +31,7 @@ class AppNavigator {
   Future<T?> pushDialog<T>(dialog.DialogRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Dialog');
 
-    final builder = _dialogRoutes.lookupRouteByName(route);
+    final builder = _dialogRoutes.lookupBuilderByRoute(route);
 
     return await showDialog(
       context: navigatorKey.currentContext!,
@@ -43,7 +43,7 @@ class AppNavigator {
   Future<void> pushBanner<T>(BannerRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Banner');
 
-    final builder = _bannerRoutes.lookupRouteByName(route);
+    final builder = _bannerRoutes.lookupBuilderByRoute(route);
 
     ScaffoldMessenger.of(navigatorKey.currentContext!).showMaterialBanner(builder(navigatorKey.currentContext!));
   }
@@ -51,7 +51,7 @@ class AppNavigator {
   Future<void> pushSnackbar<T>(SnackbarRoute route) async {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing a Snackbar');
 
-    final builder = _snackbarRoutes.lookupRouteByName(route);
+    final builder = _snackbarRoutes.lookupBuilderByRoute(route);
 
     ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(builder(navigatorKey.currentContext!));
   }

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../navigation/app_navigator.dart';
 import 'banner_navigation.dart';
 
-MaterialBannerBuilder exampleBanner = (context) {
+BannerBuilder exampleBanner = (context) {
   final message = ModalRoute.of(context)!.settings.arguments as String;
   return MaterialBanner(
     backgroundColor: Colors.amber,

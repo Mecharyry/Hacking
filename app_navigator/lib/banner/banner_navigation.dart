@@ -4,10 +4,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'banner_navigation.freezed.dart';
 
-typedef MaterialBannerBuilder = MaterialBanner Function(BuildContext);
+typedef BannerBuilder = MaterialBanner Function(BuildContext);
 
 class BannerRoutes {
-  MaterialBannerBuilder lookupRouteByName(BannerRoute route) => route.when(
+  BannerBuilder lookupBuilderByRoute(BannerRoute route) => route.when(
         example: (_) => exampleBanner,
       );
 }
