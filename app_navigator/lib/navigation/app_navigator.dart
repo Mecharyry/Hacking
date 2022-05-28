@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../bottom_sheets/bottom_sheets_navigation.dart';
+import '../bottom_sheet/bottom_sheet_navigation.dart';
 
 class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

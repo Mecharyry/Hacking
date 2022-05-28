@@ -1,4 +1,4 @@
-import 'package:app_navigator/bottom_sheets/bottom_sheets_navigation.dart';
+import 'package:app_navigator/bottom_sheet/bottom_sheet_navigation.dart';
 import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_cubit.dart';
 import 'package:app_navigator/screens/home/home_state.dart';
