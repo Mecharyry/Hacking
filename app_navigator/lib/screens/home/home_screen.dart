@@ -5,6 +5,7 @@ import 'package:app_navigator/screens/home/home_state.dart';
 import 'package:app_navigator/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:app_navigator/dialog/dialog_navigation.dart' as dialog;
 
 import '../../navigation/typedefs.dart';
 import '../../utilities/do_nothing.dart';
@@ -58,7 +59,7 @@ class _Body extends StatelessWidget {
             ),
             listener: (context, state) => state.maybeWhen(
               showBanner: (message) => _showBanner(context, message),
-              showDialog: (message) => _showDialog(context, message),
+              showDialog: (message) => getIt<AppNavigator>().pushDialog(dialog.DialogRoute.example(message)),
               showBottomSheet: (message) => getIt<AppNavigator>().pushBottomSheet(BottomSheetRoute.example(message)),
               orElse: () => doNothing('Other states are not handled'),
             ),
@@ -97,43 +98,6 @@ class _Body extends StatelessWidget {
             child: const Text('Dismiss'),
           ),
         ],
-      ),
-    );
-  }
-
-  void _showDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Dialog Title'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(message),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Dismiss'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showBottomSheet(BuildContext context, String message) {
-    showModalBottomSheet(
-      context: context,
-      builder: (context) => Container(
-        height: 200,
-        color: Colors.amber,
-        child: Center(
-          child: Text(message),
-        ),
       ),
     );
   }

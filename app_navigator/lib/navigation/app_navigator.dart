@@ -1,10 +1,13 @@
+import 'package:app_navigator/bottom_sheet/bottom_sheet_navigation.dart';
+import 'package:app_navigator/dialog/dialog_navigation.dart';
 import 'package:flutter/material.dart';
 
-import '../bottom_sheet/bottom_sheet_navigation.dart';
+import 'package:app_navigator/dialog/dialog_navigation.dart' as dialog;
 
 class AppNavigator {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final BottomSheetRoutes _bottomSheetRoute = BottomSheetRoutes();
+  final DialogRoutes _dialogRoutes = DialogRoutes();
 
   void navigateTo<T extends Object?>(String routeName, {Object? arguments}) =>
       navigatorKey.currentState?.pushNamed(routeName, arguments: arguments);
@@ -13,7 +16,19 @@ class AppNavigator {
     assert(navigatorKey.currentContext != null, 'navigation context is null when pushing bottom sheet');
 
     final builder = _bottomSheetRoute.lookupRouteByName(route);
-    assert(builder != null, 'BottomSheetRoute does not contain a route with the name: $route');
+
+    return await showModalBottomSheet(
+      context: navigatorKey.currentContext!,
+      builder: builder!,
+      routeSettings: RouteSettings(arguments: route.message),
+      isScrollControlled: true,
+    );
+  }
+
+  Future<T?> pushDialog<T>(dialog.DialogRoute route) async {
+    assert(navigatorKey.currentContext != null, 'navigation context is null when pushing dialog');
+
+    final builder = _dialogRoutes.lookupRouteByName(route);
 
     return await showModalBottomSheet(
       context: navigatorKey.currentContext!,
