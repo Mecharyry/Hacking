@@ -1,15 +1,11 @@
-import 'package:app_navigator/banner/banner_navigation.dart';
-import 'package:app_navigator/bottom_sheet/bottom_sheet_navigation.dart';
 import 'package:app_navigator/navigation/app_navigator.dart';
 import 'package:app_navigator/screens/home/home_cubit.dart';
 import 'package:app_navigator/screens/home/home_state.dart';
 import 'package:app_navigator/screens/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:app_navigator/dialog/dialog_navigation.dart' as dialog;
 
 import '../../navigation/typedefs.dart';
-import '../../utilities/do_nothing.dart';
 import '../../utilities/injection.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -33,7 +29,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: BlocProvider(
-        create: (_) => HomeCubit()..loadData(),
+        create: (_) => getIt<HomeCubit>()..loadData(),
         child: const _Body(),
       ),
     );
@@ -51,27 +47,10 @@ class _Body extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          BlocConsumer<HomeCubit, HomeState>(
-            listenWhen: (_, current) => current.maybeMap(
-              showBanner: (_) => true,
-              showDialog: (_) => true,
-              showBottomSheet: (_) => true,
-              orElse: () => false,
-            ),
-            listener: (context, state) => state.maybeWhen(
-              showBanner: (message) => getIt<AppNavigator>().pushBanner(BannerRoute.example(message)),
-              showDialog: (message) => getIt<AppNavigator>().pushDialog(dialog.DialogRoute.example(message)),
-              showBottomSheet: (message) => getIt<AppNavigator>().pushBottomSheet(BottomSheetRoute.example(message)),
-              orElse: () => doNothing('Other states are not handled'),
-            ),
-            buildWhen: (_, current) => current.maybeMap(
-              loading: (_) => true,
-              loaded: (_) => true,
-              orElse: () => false,
-            ),
-            builder: (context, state) => state.maybeWhen(
+          BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) => state.when(
               loading: () => const CircularProgressIndicator.adaptive(),
-              orElse: () => const _LoadedWidget(),
+              loaded: () => const _LoadedWidget(),
             ),
           )
         ],
