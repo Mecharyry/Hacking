@@ -11,7 +11,6 @@ import ryry.playground.screens.SplashScreen
 @Composable
 fun AppNavigationHost(
     modifier: Modifier = Modifier,
-    startDestination: String = NavigationItem.Splash.route,
 ) {
     val navController = rememberNavController();
     val appNavigator = AppNavigator(navController)
@@ -19,7 +18,7 @@ fun AppNavigationHost(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = startDestination
+        startDestination = NavigationItem.Splash.route
     ) {
         composable(NavigationItem.Splash.route) {
             SplashScreen()
