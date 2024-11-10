@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
                     AppNavigationHost(
-                        navController = rememberNavController(),
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
