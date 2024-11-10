@@ -1,13 +1,17 @@
 package ryry.playground.screens.splash
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import ryry.playground.navigation.AppNavigator
 
-class LoginScreenViewModel(private val appNavigator: AppNavigator) : ViewModel() {
+class SplashScreenViewModel(private val appNavigator: AppNavigator) : ViewModel() {
     fun navigateToLogin() {
+        viewModelScope.launch(Dispatchers.Main) {
+            delay(1000)
+            appNavigator.navigateToSplash()
+        }
     }
 }
