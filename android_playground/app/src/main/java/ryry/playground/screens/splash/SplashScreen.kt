@@ -1,24 +1,25 @@
-package ryry.playground.screens
+package ryry.playground.screens.splash
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavController
 import ryry.playground.ui.theme.PlaygroundTheme
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun SplashScreen(
+    modifier: Modifier = Modifier,
+) {
     Text(
-        text = "Login Screen",
+        text = "Splash Screen",
         modifier = modifier
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview() {
+fun SplashScreenPreview() {
     PlaygroundTheme {
-        LoginScreen()
+        SplashScreen()
     }
 }

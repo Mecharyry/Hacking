@@ -1,4 +1,4 @@
-package ryry.playground.screens
+package ryry.playground.screens.login
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -7,19 +7,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import ryry.playground.ui.theme.PlaygroundTheme
 
 @Composable
-fun SplashScreen(
-    modifier: Modifier = Modifier,
-) {
+fun LoginScreen(modifier: Modifier = Modifier) {
     Text(
-        text = "Splash Screen",
+        text = "Login Screen",
         modifier = modifier
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun SplashScreenPreview() {
+fun LoginScreenPreview() {
     PlaygroundTheme {
-        SplashScreen()
+        LoginScreen()
     }
 }

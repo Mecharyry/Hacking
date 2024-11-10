@@ -5,8 +5,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ryry.playground.screens.LoginScreen
-import ryry.playground.screens.SplashScreen
+import ryry.playground.screens.login.LoginScreen
+import ryry.playground.screens.splash.SplashScreen
 
 @Composable
 fun AppNavigationHost(
