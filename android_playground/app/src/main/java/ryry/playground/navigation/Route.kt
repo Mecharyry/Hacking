@@ -1,11 +1,11 @@
 package ryry.playground.navigation
 
-enum class Route {
-    SPLASH,
-    LOGIN,
-}
+import kotlinx.serialization.Serializable
 
-sealed class NavigationItem(val route: String) {
-    data object Splash : NavigationItem(Route.SPLASH.name)
-    data object Login : NavigationItem(Route.LOGIN.name)
+@Serializable
+sealed class Route(val direction: String) {
+    @Serializable
+    data object Splash : Route("splash")
+    @Serializable
+    data object Login : Route("login")
 }

@@ -1,16 +1,21 @@
 package ryry.playground.screens.login
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ryry.playground.navigation.AppNavigator
+import ryry.playground.navigation.Route
+import javax.inject.Inject
 
-class LoginScreenViewModel(private val appNavigator: AppNavigator) : ViewModel() {
+@HiltViewModel
+class LoginScreenViewModel @Inject constructor(private val appNavigator: AppNavigator) :
+    ViewModel() {
     private var _uiState = MutableStateFlow(LoginData("Welcome to Login!"))
     var uiState: StateFlow<LoginData> = _uiState.asStateFlow()
 
-    fun navigateToSplash() = appNavigator.navigateToSplash()
+    fun navigateToSplash() = appNavigator.navigateTo(Route.Splash)
 }
 
 data class LoginData(val title: String)
