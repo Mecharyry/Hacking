@@ -6,12 +6,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import ryry.playground.ui.theme.PlaygroundTheme
 
 @Composable
 fun LoginScreen(
-    viewModel: LoginScreenViewModel = viewModel(),
+    viewModel: LoginScreenViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val loginData by viewModel.uiState.collectAsState()

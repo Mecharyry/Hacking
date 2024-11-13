@@ -1,19 +1,21 @@
 package ryry.playground.navigation
 
 import androidx.navigation.NavController
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface MyModule {
-
-    @Binds
-    abstract fun bindMyDependency(impl: NavHostBasedAppNavigator): AppNavigator
+object NavigationModules {
+    @Provides
+    @Singleton
+    fun provideAppNavigator(): AppNavigator {
+        return NavHostBasedAppNavigator()
+    }
 }
 
 interface AppNavigator {

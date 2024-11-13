@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
     implementation(libs.dagger.hilt.android)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     kapt(libs.dagger.hilt.compiler)
 
