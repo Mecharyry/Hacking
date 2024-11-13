@@ -1,9 +1,11 @@
 package ryry.playground.screens.login
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -14,11 +16,14 @@ fun LoginScreen(
     viewModel: LoginScreenViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
-    val loginData by viewModel.uiState.collectAsState()
-    Text(
-        text = loginData.title,
-        modifier = modifier
-    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier.fillMaxSize()
+    ) {
+        Button(onClick = { viewModel.navigateToSplash() }) {
+            Text(text = "Navigate to Splash Screen")
+        }
+    }
 }
 
 @Preview(showBackground = true)
