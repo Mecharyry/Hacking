@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ryry.playground.navigation.AppNavigator
 import ryry.playground.navigation.Route
+import ryry.playground.persistence.Persistence
 import ryry.playground.screens.login.LoginScreen
 import ryry.playground.screens.splash.SplashScreen
 import ryry.playground.ui.theme.PlaygroundTheme
