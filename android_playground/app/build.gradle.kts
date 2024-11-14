@@ -84,7 +84,7 @@ apollo {
     service("service") {
         packageName.set("ryry.playground")
         introspection {
-            endpointUrl.set("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+            endpointUrl.set("http://localhost:4000/")
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }
     }

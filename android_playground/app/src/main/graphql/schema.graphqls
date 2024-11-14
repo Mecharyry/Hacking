@@ -1,94 +1,9 @@
-type Query {
-  launches("The number of results to show. Must be >= 1. Default = 20" pageSize: Int, "If you add a cursor here, it will only return results _after_ this cursor" after: String): LaunchConnection!
-
-  launch(id: ID!): Launch
-
-  me: User
-
-  totalTripsBooked: Int
-}
-
-"""
-Simple wrapper around our list of launches that contains a cursor to the
-last item in the list. Pass this cursor to the launches query to fetch results
-after these.
-"""
-type LaunchConnection {
-  cursor: String!
-
-  hasMore: Boolean!
-
-  launches: [Launch]!
-}
-
-type Launch {
-  id: ID!
-
-  site: String
-
-  mission: Mission
-
-  rocket: Rocket
-
-  isBooked: Boolean!
-}
-
-type Mission {
-  name: String
-
-  missionPatch(size: PatchSize): String
-}
-
-enum PatchSize {
-  SMALL
-
-  LARGE
-}
-
-type Rocket {
-  id: ID!
-
-  name: String
-
-  type: String
-}
-
-type User {
-  id: ID!
-
-  email: String!
-
-  profileImage: String
-
-  trips: [Launch]!
-
-  token: String
-}
-
-type Mutation {
-  bookTrips(launchIds: [ID]!): TripUpdateResponse!
-
-  cancelTrip(launchId: ID!): TripUpdateResponse!
-
-  login(email: String): User
-}
-
-type TripUpdateResponse {
-  success: Boolean!
-
-  message: String
-
-  launches: [Launch]
-}
-
-type Subscription {
-  tripsBooked: Int
-}
-
 """
 A GraphQL Schema defines the capabilities of a GraphQL server. It exposes all available types and directives on the server, as well as the entry points for query, mutation, and subscription operations.
 """
 type __Schema {
+  description: String
+
   """
   A list of all types supported by this server.
   """
@@ -118,7 +33,7 @@ type __Schema {
 """
 The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
 
-Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name, description and optional `specifiedByURL`, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
 """
 type __Type {
   kind: __TypeKind!
@@ -135,9 +50,11 @@ type __Type {
 
   enumValues(includeDeprecated: Boolean = false): [__EnumValue!]
 
-  inputFields: [__InputValue!]
+  inputFields(includeDeprecated: Boolean = false): [__InputValue!]
 
   ofType: __Type
+
+  specifiedByURL: String
 }
 
 """
@@ -155,7 +72,7 @@ enum __TypeKind {
   OBJECT
 
   """
-  Indicates this type is an interface. `fields` and `possibleTypes` are valid fields.
+  Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields.
   """
   INTERFACE
 
@@ -193,7 +110,7 @@ type __Field {
 
   description: String
 
-  args: [__InputValue!]!
+  args(includeDeprecated: Boolean = false): [__InputValue!]!
 
   type: __Type!
 
@@ -216,6 +133,10 @@ type __InputValue {
   A GraphQL-formatted string representing the default value for this input value.
   """
   defaultValue: String
+
+  isDeprecated: Boolean!
+
+  deprecationReason: String
 }
 
 """
@@ -243,7 +164,9 @@ type __Directive {
 
   locations: [__DirectiveLocation!]!
 
-  args: [__InputValue!]!
+  args(includeDeprecated: Boolean = false): [__InputValue!]!
+
+  isRepeatable: Boolean!
 }
 
 """
@@ -347,9 +270,324 @@ enum __DirectiveLocation {
 }
 
 """
-The `Upload` scalar type represents a file upload.
+An user's saved cart session. Only one cart can be active at a time
 """
-scalar Upload
+type Cart {
+  """
+  Each user can only have one cart so the ID is the same as the user ID
+  """
+  userId: ID!
+
+  """
+  Items saved in the cart session
+  """
+  items: [Variant]
+
+  """
+  The current total of all the items in the cart, before taxes and shipping
+  """
+  subtotal: Float
+}
+
+type CartMutations {
+  checkout(paymentMethodId: ID!): CheckoutResult
+
+  addVariantToCart(variantId: ID!, quantity: Int = 1): ResultWithMessage
+
+  removeVariantFromCart(variantId: ID!, quantity: Int = 1): ResultWithMessage
+}
+
+type CheckoutResult {
+  successful: Boolean
+
+  orderID: ID
+}
+
+"""
+Inventory details about a specific Variant
+"""
+type Inventory {
+  """
+  Returns true if the inventory count is greater than 0
+  """
+  inStock: Boolean!
+
+  """
+  The raw count of not purchased items in the warehouse
+  """
+  inventory: Int
+}
+
+type Mutation {
+  cart: CartMutations
+}
+
+"""
+Returns information about a specific purchase
+"""
+type Order {
+  """
+  Each order has a unique id which is separate from the user or items they bought
+  """
+  id: ID!
+
+  """
+  The user who made the purchase
+  """
+  buyer: User!
+
+  """
+  A list of all the items they purchased. This is the Variants, not the Products so we know exactly which
+  product and which size/color/feature was bought
+  """
+  items: [Variant!]!
+
+  """
+  Calculate the cost to ship all the variants to the users address
+  """
+  shippingCost: Float
+}
+
+"""
+A saved payment option for an user
+"""
+type PaymentMethod {
+  id: ID!
+
+  name: String
+
+  description: String
+
+  type: PaymentType!
+}
+
+"""
+A fix set of payment types that we accept
+"""
+enum PaymentType {
+  CREDIT_CARD
+
+  DEBIT_CARD
+
+  BANK_ACCOUNT
+}
+
+"""
+A specific product sold by our store. This contains all the high level details but is not the purchasable item.
+See Variant for more info.
+"""
+type Product {
+  id: ID!
+
+  """
+  Related products for this product, the user can be fetched from the `x-user-id` header
+  """
+  recommendedProducts: [Product]
+
+  upc: ID!
+
+  title: String
+
+  description: String
+
+  mediaUrl: String
+
+  """
+  Mock random date of when a product might be released
+  """
+  releaseDate: String
+
+  """
+  Variants of the products to view specific size/color/price options
+  """
+  variants(searchInput: VariantSearchInput = {
+
+  }
+  ): [Variant]
+
+  reviews: [Review!]
+}
+
+"""
+Search filters for when returning Products
+"""
+input ProductSearchInput {
+  titleStartsWith: String
+}
+
+type Query {
+  """
+  Get a specific order by id. Meant to be used for a detailed view of an order
+  """
+  order(id: ID!): Order
+
+  """
+  List all available products without any search filters
+  """
+  listAllProducts: [Product]
+
+  """
+  Get all available products to shop for. Optionally provide some search filters
+  """
+  searchProducts(searchInput: ProductSearchInput! = {
+
+  }
+  ): [Product]
+
+  """
+  Get all available variants of products to shop for. Optionally provide some search filters
+  """
+  searchVariants(searchInput: VariantSearchInput! = {
+
+  }
+  ): [Variant]
+
+  """
+  Get a specific product by id. Useful for the product details page or checkout page
+  """
+  product(id: ID!): Product
+
+  """
+  Get a specific variant by id. Useful for the product details page or checkout page
+  """
+  variant(id: ID!): Variant
+
+  """
+  Get the current user from our fake "auth" headers
+  Set the "x-user-id" header to the user id.
+  """
+  user: User
+}
+
+type ResultWithMessage {
+  successful: Boolean
+
+  message: String
+}
+
+"""
+A review of a given product by a specific user
+"""
+type Review {
+  id: ID!
+
+  """
+  The plain text version of the review
+  """
+  body: String
+
+  """
+  The person who authored the review
+  """
+  author: String @deprecated(reason: "Use the new `user` field")
+
+  """
+  The User who submitted the review
+  """
+  user: User
+
+  """
+  The product which this review is about
+  """
+  product: Product
+}
+
+"""
+An user account in our system
+"""
+type User {
+  id: ID!
+
+  """
+  The user's active cart session. Once the cart items have been purchases, they transition to an Order
+  """
+  cart: Cart
+
+  """
+  Suggest products for this user, optionally pass in a specific product id to compare too
+  """
+  recommendedProducts(productId: ID = null): [Product]
+
+  """
+  The users current saved shipping address
+  """
+  shippingAddress: String
+
+  """
+  The users login username
+  """
+  username: String!
+
+  """
+  Get the list of last session id of user activity
+  """
+  previousSessions: [ID!]
+
+  """
+  Total saved loyalty points and rewards
+  """
+  loyaltyPoints: Int
+
+  """
+  Saved payment methods that can be used to submit orders
+  """
+  paymentMethods: [PaymentMethod]
+
+  """
+  The users previous purchases
+  """
+  orders: [Order]
+}
+
+"""
+A variant of a product which is a unique combination of attributes like size and color
+Variants are the entities that are added to carts and purchased
+"""
+type Variant {
+  id: ID!
+
+  """
+  Price in decimals for this variant
+  """
+  price: Float!
+
+  """
+  Checks the warehouse API for inventory information.
+  """
+  inventory: Inventory
+
+  """
+  Link back to the parent Product
+  """
+  product: Product
+
+  """
+  Optional color option for this variant
+  """
+  colorway: String
+
+  """
+  Optional size option for this variant
+  """
+  size: String
+
+  """
+  Optional dimensions. Can be use to calculate other info like shipping or packaging
+  """
+  dimensions: String
+
+  """
+  Optional weight. Can be use to calculate other info like shipping or packaging
+  """
+  weight: Float
+}
+
+"""
+Search filters for when returning Variants
+"""
+input VariantSearchInput {
+  sizeStartsWith: String
+}
 
 """
 Directs the executor to skip this field or fragment when the `if` argument is true.
@@ -364,10 +602,16 @@ directive @include ("Included when true." if: Boolean!) on FIELD|FRAGMENT_SPREAD
 """
 Marks an element of a GraphQL schema as no longer supported.
 """
-directive @deprecated ("Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax (as specified by [CommonMark](https:\/\/commonmark.org\/)." reason: String = "No longer supported") on FIELD_DEFINITION|ENUM_VALUE
+directive @deprecated ("Explains why this element was deprecated, usually also including a suggestion for how to access supported similar data. Formatted using the Markdown syntax, as specified by [CommonMark](https:\/\/commonmark.org\/)." reason: String = "No longer supported") on FIELD_DEFINITION|ARGUMENT_DEFINITION|INPUT_FIELD_DEFINITION|ENUM_VALUE
+
+"""
+Exposes a URL that specifies the behavior of this scalar.
+"""
+directive @specifiedBy ("The URL that specifies the behavior of this scalar." url: String!) on SCALAR
+
+directive @defer (label: String, if: Boolean! = true) on FRAGMENT_SPREAD|INLINE_FRAGMENT
 
 schema {
   query: Query
   mutation: Mutation
-  subscription: Subscription
 }

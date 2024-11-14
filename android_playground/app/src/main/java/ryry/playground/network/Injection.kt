@@ -17,4 +17,16 @@ object NetworkModules {
             .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideApolloNetwork(apolloClient: ApolloClient): ApolloNetwork {
+        return ApolloNetwork(apolloClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetwork(apolloNetwork: ApolloNetwork): Network {
+        return DelegateNetwork(apolloNetwork)
+    }
 }

@@ -1,8 +1,11 @@
 package ryry.playground.network
 
 import com.apollographql.apollo.ApolloClient
+import ryry.playground.GetUserQuery
 
-
-val apolloClient = ApolloClient.Builder()
-    .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
-    .build()
+class ApolloNetwork(private val apolloClient: ApolloClient) : Network {
+    override suspend fun fetchUsername(): String {
+        return apolloClient.query(GetUserQuery()).execute()
+            .data?.user?.username ?: "No data"
+    }
+}
