@@ -1,4 +1,4 @@
-package ryry.playground.persistence.room
+package ryry.playground.persistence.room.internal
 
 import androidx.room.ColumnInfo
 import androidx.room.Dao

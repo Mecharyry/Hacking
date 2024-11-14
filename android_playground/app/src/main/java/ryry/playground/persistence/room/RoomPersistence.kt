@@ -1,9 +1,12 @@
 package ryry.playground.persistence.room
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
+import ryry.playground.persistence.Persistence
+import ryry.playground.persistence.room.internal.RoomDatabase
+import ryry.playground.persistence.room.tables.RoomUserPersistence
+import ryry.playground.persistence.tables.UserPersistence
 
-@Database(entities = [User::class], version = 1)
-abstract class RoomPersistence : RoomDatabase() {
-    abstract fun userDao(): UserDao
+class RoomPersistence(roomDatabase: RoomDatabase) : Persistence {
+    private val userPersistence = RoomUserPersistence(roomDatabase)
+
+    override fun userPersistence(): UserPersistence = userPersistence
 }
