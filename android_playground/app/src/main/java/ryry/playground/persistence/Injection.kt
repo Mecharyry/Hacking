@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ryry.playground.persistence.in_memory.InMemoryPersistence
 import ryry.playground.persistence.room.RoomPersistence
 import ryry.playground.persistence.room.internal.RoomDatabase
 import javax.inject.Singleton
@@ -31,7 +32,16 @@ object PersistenceModule {
 
     @Provides
     @Singleton
-    fun providePersistence(roomPersistence: RoomPersistence): Persistence {
-        return DelegatePersistence(roomPersistence)
+    fun provideInMemoryPersistence(): InMemoryPersistence {
+        return InMemoryPersistence()
+    }
+
+    @Provides
+    @Singleton
+    fun providePersistence(
+        roomPersistence: RoomPersistence,
+        inMemoryPersistence: InMemoryPersistence
+    ): Persistence {
+        return DelegatePersistence(roomPersistence, inMemoryPersistence)
     }
 }
