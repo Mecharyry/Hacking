@@ -1,21 +1,29 @@
 package ryry.playground.screens.splash
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import ryry.playground.network.Network
 import ryry.playground.ui.theme.PlaygroundTheme
 
 @Composable
 fun SplashScreen(
+    network: Network,
     viewModel: SplashScreenViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(Unit) {
+        val response = network.fetchUsername()
+        Log.d("RYRY", "Network call success $response")
+    }
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier.fillMaxSize()
@@ -30,6 +38,10 @@ fun SplashScreen(
 @Composable
 fun SplashScreenPreview() {
     PlaygroundTheme {
-        SplashScreen()
+        SplashScreen(object : Network {
+            override suspend fun fetchUsername(): String {
+                return "Username"
+            }
+        })
     }
 }

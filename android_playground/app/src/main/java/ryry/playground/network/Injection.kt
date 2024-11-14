@@ -14,7 +14,7 @@ object NetworkModules {
     @Singleton
     fun provideApolloClient(): ApolloClient {
         return ApolloClient.Builder()
-            .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+            .serverUrl("https://mac.marlin-yo.ts.net/")
             .build()
     }
 

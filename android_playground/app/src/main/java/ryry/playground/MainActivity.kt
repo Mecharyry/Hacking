@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ryry.playground.navigation.AppNavigator
 import ryry.playground.navigation.Route
+import ryry.playground.network.Network
 import ryry.playground.persistence.Persistence
 import ryry.playground.screens.login.LoginScreen
 import ryry.playground.screens.splash.SplashScreen
@@ -25,8 +26,12 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var appNavigator: AppNavigator
+
     @Inject
     lateinit var persistence: Persistence
+
+    @Inject
+    lateinit var network: Network
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Route.Splash.direction
                     ) {
                         composable(route = Route.Splash.direction) {
-                            SplashScreen()
+                            SplashScreen(network)
                         }
                         composable(route = Route.Login.direction) {
                             LoginScreen()
