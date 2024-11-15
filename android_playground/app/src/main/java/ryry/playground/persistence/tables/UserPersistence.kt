@@ -1,6 +1,6 @@
 package ryry.playground.persistence.tables
 
-import ryry.playground.persistence.models.User
+import ryry.playground.domain.models.User
 
 interface UserPersistence {
     fun getAll(): List<User>

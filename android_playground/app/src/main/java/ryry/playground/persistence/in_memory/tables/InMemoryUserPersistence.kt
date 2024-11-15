@@ -1,6 +1,6 @@
 package ryry.playground.persistence.in_memory.tables
 
-import ryry.playground.persistence.models.User
+import ryry.playground.domain.models.User
 import ryry.playground.persistence.tables.UserPersistence
 
 class InMemoryUserPersistence : UserPersistence {

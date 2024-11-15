@@ -1,6 +1,6 @@
 package ryry.playground.persistence.room.tables
 
-import ryry.playground.persistence.models.User
+import ryry.playground.domain.models.User
 import ryry.playground.persistence.room.internal.RoomDatabase
 import ryry.playground.persistence.tables.UserPersistence
 
