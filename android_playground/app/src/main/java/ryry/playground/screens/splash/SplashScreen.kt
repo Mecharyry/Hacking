@@ -11,6 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ryry.playground.domain.models.User
 import ryry.playground.network.Network
 import ryry.playground.ui.theme.PlaygroundTheme
@@ -22,8 +26,10 @@ fun SplashScreen(
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(Unit) {
-        val response = network.userNetwork().fetchUser()
-        Log.d("RYRY", "Network call success $response")
+        withContext(Dispatchers.IO) {
+            val response = network.userNetwork().fetchUser()
+            Log.d("RYRY", "Network call success $response")
+        }
     }
     Box(
         contentAlignment = Alignment.Center,

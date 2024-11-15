@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.room.ktx)
     implementation(libs.apollo.runtime)
+    implementation(libs.okhttp)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi)
 
     kapt(libs.dagger.hilt.compiler)
     ksp(libs.room.compiler)
