@@ -10,12 +10,12 @@ class InMemoryUserPersistence : UserPersistence {
         return users
     }
 
-    override fun loadAllByIds(userIds: IntArray): List<User> {
-        return users.filter { it.uid in userIds }
+    override fun loadAllByIds(userIds: Array<String>): List<User> {
+        return users.filter { it.id in userIds }
     }
 
-    override fun findByName(first: String, last: String): User {
-        return users.first { it.firstName == first && it.lastName == last }
+    override fun findByUsername(username: String): User {
+        return users.first { it.username == username }
     }
 
     override fun insertAll(vararg users: User) {

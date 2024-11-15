@@ -10,9 +10,8 @@ import androidx.room.Query
 
 @Entity
 data class User(
-    @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "first_name") val firstName: String?,
-    @ColumnInfo(name = "last_name") val lastName: String?
+    @PrimaryKey val uid: String,
+    @ColumnInfo(name = "username") val username: String,
 )
 
 @Dao
@@ -21,13 +20,12 @@ interface UserDao {
     fun getAll(): List<User>
 
     @Query("SELECT * FROM user WHERE uid IN (:userIds)")
-    fun loadAllByIds(userIds: IntArray): List<User>
+    fun loadAllByIds(userIds: Array<String>): List<User>
 
     @Query(
-        "SELECT * FROM user WHERE first_name LIKE :first AND " +
-                "last_name LIKE :last LIMIT 1"
+        "SELECT * FROM user WHERE username LIKE :username LIMIT 1"
     )
-    fun findByName(first: String, last: String): User
+    fun findByUsername(username: String): User
 
     @Insert
     fun insertAll(vararg users: User)

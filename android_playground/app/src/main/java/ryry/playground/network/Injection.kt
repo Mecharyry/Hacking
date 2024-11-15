@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import com.apollographql.apollo.ApolloClient
+import ryry.playground.network.apollo.ApolloNetwork
 import javax.inject.Singleton
 
 @Module

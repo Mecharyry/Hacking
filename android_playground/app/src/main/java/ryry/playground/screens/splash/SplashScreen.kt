@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import ryry.playground.domain.models.User
 import ryry.playground.network.Network
 import ryry.playground.ui.theme.PlaygroundTheme
 
@@ -21,7 +22,7 @@ fun SplashScreen(
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(Unit) {
-        val response = network.fetchUsername()
+        val response = network.userNetwork().fetchUser()
         Log.d("RYRY", "Network call success $response")
     }
     Box(
@@ -38,10 +39,13 @@ fun SplashScreen(
 @Composable
 fun SplashScreenPreview() {
     PlaygroundTheme {
-        SplashScreen(object : Network {
-            override suspend fun fetchUsername(): String {
-                return "Username"
-            }
+        SplashScreen(network = object : Network {
+            override suspend fun userNetwork() =
+                object : ryry.playground.network.requests.UserNetwork {
+                    override suspend fun fetchUser(): User {
+                        return User("1", "ryry")
+                    }
+                }
         })
     }
 }
