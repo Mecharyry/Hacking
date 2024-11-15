@@ -12,22 +12,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ryry.playground.domain.models.User
-import ryry.playground.network.Network
+import ryry.playground.api.contract.Api
 import ryry.playground.ui.theme.PlaygroundTheme
 
 @Composable
 fun SplashScreen(
-    network: Network,
+    api: Api,
     viewModel: SplashScreenViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
     LaunchedEffect(Unit) {
         withContext(Dispatchers.IO) {
-            val response = network.userNetwork().fetchUser()
+            val response = api.userApi().fetchUser()
             Log.d("RYRY", "Network call success $response")
         }
     }
@@ -45,9 +43,9 @@ fun SplashScreen(
 @Composable
 fun SplashScreenPreview() {
     PlaygroundTheme {
-        SplashScreen(network = object : Network {
-            override suspend fun userNetwork() =
-                object : ryry.playground.network.requests.UserNetwork {
+        SplashScreen(api = object : Api {
+            override suspend fun userApi() =
+                object : ryry.playground.api.contract.UserApi {
                     override suspend fun fetchUser(): User {
                         return User("1", "ryry")
                     }

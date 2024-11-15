@@ -2,7 +2,7 @@ package ryry.playground.persistence.room.tables
 
 import ryry.playground.domain.models.User
 import ryry.playground.persistence.room.internal.RoomDatabase
-import ryry.playground.persistence.tables.UserPersistence
+import ryry.playground.persistence.contract.UserPersistence
 
 class RoomUserPersistence(private val roomDatabase: RoomDatabase) : UserPersistence {
     override fun getAll(): List<User> {

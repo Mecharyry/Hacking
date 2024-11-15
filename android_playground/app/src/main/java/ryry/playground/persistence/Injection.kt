@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import ryry.playground.persistence.contract.DelegatePersistence
+import ryry.playground.persistence.contract.Persistence
 import ryry.playground.persistence.in_memory.InMemoryPersistence
 import ryry.playground.persistence.room.RoomPersistence
 import ryry.playground.persistence.room.internal.RoomDatabase

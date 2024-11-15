@@ -1,7 +1,7 @@
 package ryry.playground.persistence.in_memory.tables
 
 import ryry.playground.domain.models.User
-import ryry.playground.persistence.tables.UserPersistence
+import ryry.playground.persistence.contract.UserPersistence
 
 class InMemoryUserPersistence : UserPersistence {
     private val users = mutableListOf<User>()

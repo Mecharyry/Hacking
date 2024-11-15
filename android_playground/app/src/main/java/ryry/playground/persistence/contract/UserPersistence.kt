@@ -1,4 +1,4 @@
-package ryry.playground.persistence.tables
+package ryry.playground.persistence.contract
 
 import ryry.playground.domain.models.User
 

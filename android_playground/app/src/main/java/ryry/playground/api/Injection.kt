@@ -1,4 +1,4 @@
-package ryry.playground.network
+package ryry.playground.api
 
 import com.apollographql.apollo.ApolloClient
 import dagger.Module
@@ -7,8 +7,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import ryry.playground.network.apollo.ApolloNetwork
-import ryry.playground.network.rest.RestNetwork
+import ryry.playground.api.apollo.ApolloApi
+import ryry.playground.api.contract.DelegateApi
+import ryry.playground.api.contract.Api
+import ryry.playground.api.retrofit.RetrofitApi
 import javax.inject.Singleton
 
 @Module
@@ -18,7 +20,7 @@ object NetworkModules {
 
     @Provides
     @Singleton
-    fun provideRestHttpClient(): Retrofit {
+    fun provideRetrofitHttpClient(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL + "api/")
             .addConverterFactory(MoshiConverterFactory.create())
@@ -27,8 +29,8 @@ object NetworkModules {
 
     @Provides
     @Singleton
-    fun provideRestNetwork(retrofit: Retrofit): RestNetwork {
-        return RestNetwork(retrofit)
+    fun provideRetrofitApi(retrofit: Retrofit): RetrofitApi {
+        return RetrofitApi(retrofit)
     }
 
     @Provides
@@ -41,13 +43,13 @@ object NetworkModules {
 
     @Provides
     @Singleton
-    fun provideApolloNetwork(apolloClient: ApolloClient): ApolloNetwork {
-        return ApolloNetwork(apolloClient)
+    fun provideApolloApi(apolloClient: ApolloClient): ApolloApi {
+        return ApolloApi(apolloClient)
     }
 
     @Provides
     @Singleton
-    fun provideNetwork(apolloNetwork: ApolloNetwork, restNetwork: RestNetwork): Network {
-        return DelegateNetwork(apolloNetwork, restNetwork)
+    fun provideApi(apolloNetwork: ApolloApi, restNetwork: RetrofitApi): Api {
+        return DelegateApi(apolloNetwork, restNetwork)
     }
 }

@@ -15,8 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ryry.playground.navigation.AppNavigator
 import ryry.playground.navigation.Route
-import ryry.playground.network.Network
-import ryry.playground.persistence.Persistence
+import ryry.playground.api.contract.Api
+import ryry.playground.persistence.contract.Persistence
 import ryry.playground.screens.login.LoginScreen
 import ryry.playground.screens.splash.SplashScreen
 import ryry.playground.ui.theme.PlaygroundTheme
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
     lateinit var persistence: Persistence
 
     @Inject
-    lateinit var network: Network
+    lateinit var api: Api
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = Route.Splash.direction
                     ) {
                         composable(route = Route.Splash.direction) {
-                            SplashScreen(network)
+                            SplashScreen(api)
                         }
                         composable(route = Route.Login.direction) {
                             LoginScreen()

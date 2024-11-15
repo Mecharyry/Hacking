@@ -1,12 +1,12 @@
-package ryry.playground.network.apollo.requests
+package ryry.playground.api.apollo.api
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.http.HttpHeader
 import ryry.playground.GetUserQuery
 import ryry.playground.domain.models.User
-import ryry.playground.network.requests.UserNetwork
+import ryry.playground.api.contract.UserApi
 
-class ApolloUserNetwork(private val apolloClient: ApolloClient) : UserNetwork {
+class ApolloUserApi(private val apolloClient: ApolloClient) : UserApi {
     override suspend fun fetchUser(): User {
         apolloClient
             .query(GetUserQuery())

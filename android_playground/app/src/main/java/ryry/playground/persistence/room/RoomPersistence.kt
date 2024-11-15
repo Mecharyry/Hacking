@@ -1,9 +1,9 @@
 package ryry.playground.persistence.room
 
-import ryry.playground.persistence.Persistence
+import ryry.playground.persistence.contract.Persistence
 import ryry.playground.persistence.room.internal.RoomDatabase
 import ryry.playground.persistence.room.tables.RoomUserPersistence
-import ryry.playground.persistence.tables.UserPersistence
+import ryry.playground.persistence.contract.UserPersistence
 
 class RoomPersistence(roomDatabase: RoomDatabase) : Persistence {
     private val userPersistence = RoomUserPersistence(roomDatabase)

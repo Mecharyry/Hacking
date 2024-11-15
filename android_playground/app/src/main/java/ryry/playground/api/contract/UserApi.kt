@@ -1,7 +1,7 @@
-package ryry.playground.network.requests
+package ryry.playground.api.contract
 
 import ryry.playground.domain.models.User
 
-interface UserNetwork {
+interface UserApi {
     suspend fun fetchUser(): User
 }
