@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import ryry.playground.data_source.ProductsLocalDataSource
-import ryry.playground.data_source.ProductsRemoteDataSource
+import ryry.playground.data.products.ProductsLocalDataSource
+import ryry.playground.data.products.ProductsRemoteDataSource
 import javax.inject.Singleton
 
 @Module

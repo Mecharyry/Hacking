@@ -2,8 +2,8 @@ package ryry.playground.domain.repositories
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ryry.playground.data_source.ProductsLocalDataSource
-import ryry.playground.data_source.ProductsRemoteDataSource
+import ryry.playground.data.products.ProductsLocalDataSource
+import ryry.playground.data.products.ProductsRemoteDataSource
 import ryry.playground.domain.models.Product
 
 class ProductsRepository(
