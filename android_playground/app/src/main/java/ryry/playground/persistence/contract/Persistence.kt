@@ -5,6 +5,7 @@ import ryry.playground.persistence.room.RoomPersistence
 
 interface Persistence {
     fun userPersistence(): UserPersistence
+    fun productPersistence(): ProductPersistence
 }
 
 class DelegatePersistence(
@@ -12,5 +13,7 @@ class DelegatePersistence(
     private val inMemoryPersistence: InMemoryPersistence
 ) : Persistence {
     override fun userPersistence(): UserPersistence = roomPersistence.userPersistence()
+
+    override fun productPersistence(): ProductPersistence = inMemoryPersistence.productPersistence()
 }
 
