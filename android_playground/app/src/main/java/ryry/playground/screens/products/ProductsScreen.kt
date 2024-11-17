@@ -97,11 +97,41 @@ fun ProductsScreen(
                     }
 
                     is ProductsScreenData.Loading -> {
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
+                        LazyColumn {
+                            items(5) {
+                                Card(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(8.dp)
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(16.dp)
+                                            .background(color)
+                                    ) {
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(180.dp)
+                                                .background(color)
+                                        )
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(20.dp)
+                                                .background(color)
+                                        )
+                                        Spacer(modifier = Modifier.height(4.dp))
+                                        Box(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(14.dp)
+                                                .background(color)
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
 
