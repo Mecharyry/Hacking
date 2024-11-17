@@ -1,0 +1,8 @@
+query GetProducts {
+    listAllProducts {
+        id
+        description
+        mediaUrl
+        title
+    }
+}
