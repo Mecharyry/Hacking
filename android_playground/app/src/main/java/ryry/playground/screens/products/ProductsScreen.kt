@@ -1,5 +1,11 @@
 package ryry.playground.screens.products
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,6 +34,16 @@ fun ProductsScreen(
     var filterText by remember { mutableStateOf(TextFieldValue("")) }
     val uiState by viewModel.uiState.collectAsState()
 
+    val infiniteTransition = rememberInfiniteTransition()
+    val color by infiniteTransition.animateColor(
+        initialValue = Color.Gray,
+        targetValue = Color.LightGray,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1000, easing = LinearEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = "skeletonColorTransition"
+    )
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -40,7 +56,7 @@ fun ProductsScreen(
                                 modifier = Modifier
                                     .size(40.dp)
                                     .clip(CircleShape)
-                                    .background(Color.Gray)
+                                    .background(color)
                             )
                         }
 
