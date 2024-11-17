@@ -1,8 +1,8 @@
 package ryry.playground.system_boundaries.persistence.room.tables
 
 import ryry.playground.domain.models.User
-import ryry.playground.persistence.room.internal.RoomDatabase
-import ryry.playground.persistence.contract.UserPersistence
+import ryry.playground.system_boundaries.persistence.contract.UserPersistence
+import ryry.playground.system_boundaries.persistence.room.internal.RoomDatabase
 
 class RoomUserPersistence(private val roomDatabase: RoomDatabase) : UserPersistence {
     override fun getAll(): List<User> {
@@ -25,7 +25,7 @@ class RoomUserPersistence(private val roomDatabase: RoomDatabase) : UserPersiste
 
     override fun insertAll(vararg users: User) {
         users.map {
-            ryry.playground.persistence.room.internal.User(
+            ryry.playground.system_boundaries.persistence.room.internal.User(
                 it.id,
                 it.username,
             )
@@ -36,7 +36,7 @@ class RoomUserPersistence(private val roomDatabase: RoomDatabase) : UserPersiste
 
     override fun delete(user: User) {
         user.let {
-            ryry.playground.persistence.room.internal.User(
+            ryry.playground.system_boundaries.persistence.room.internal.User(
                 it.id,
                 it.username,
             )

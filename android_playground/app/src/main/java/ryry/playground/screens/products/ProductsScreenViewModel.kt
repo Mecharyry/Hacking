@@ -9,7 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import ryry.playground.domain.models.Outcome
 import ryry.playground.domain.repositories.ProductsRepository
 import ryry.playground.navigation.AppNavigator
 import ryry.playground.navigation.Route
@@ -27,12 +29,31 @@ class ProductsScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            productsRepository.fetchProducts()
+            productsRepository.observeProducts()
+                .onStart {
+                    productsRepository.fetchProducts()
+                }
                 .flowOn(Dispatchers.IO)
                 .map {
-                    ProductsScreenData.Success(ProductsScreenSuccess(it.map { product ->
-                        Product(product.title, product.description, product.mediaUrl)
-                    }))
+                    when (it) {
+                        is Outcome.Success -> ProductsScreenData.Success(
+                            ProductsScreenSuccess(
+                                it.data.map { product ->
+                                    Product(
+                                        title = product.title,
+                                        description = product.description,
+                                        image = product.mediaUrl
+                                    )
+                                }
+                            )
+                        )
+
+                        is Outcome.Failure -> ProductsScreenData.Error(
+                            it.exception.message ?: "An error occurred"
+                        )
+
+                        is Outcome.Loading -> ProductsScreenData.Loading("Loading...")
+                    }
                 }
                 .flowOn(Dispatchers.Main)
                 .collect {

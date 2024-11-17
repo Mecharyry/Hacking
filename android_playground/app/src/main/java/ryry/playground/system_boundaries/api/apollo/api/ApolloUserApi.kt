@@ -4,7 +4,7 @@ import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.http.HttpHeader
 import ryry.playground.GetUserQuery
 import ryry.playground.domain.models.User
-import ryry.playground.api.contract.UserApi
+import ryry.playground.system_boundaries.api.contract.UserApi
 
 class ApolloUserApi(private val apolloClient: ApolloClient) : UserApi {
     override suspend fun fetchUser(): User {

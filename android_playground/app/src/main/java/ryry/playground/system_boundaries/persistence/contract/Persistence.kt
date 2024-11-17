@@ -1,7 +1,7 @@
 package ryry.playground.system_boundaries.persistence.contract
 
-import ryry.playground.persistence.in_memory.InMemoryPersistence
-import ryry.playground.persistence.room.RoomPersistence
+import ryry.playground.system_boundaries.persistence.in_memory.InMemoryPersistence
+import ryry.playground.system_boundaries.persistence.room.RoomPersistence
 
 interface Persistence {
     fun userPersistence(): UserPersistence

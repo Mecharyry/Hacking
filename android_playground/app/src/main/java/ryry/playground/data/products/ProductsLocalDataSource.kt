@@ -1,7 +1,7 @@
 package ryry.playground.data.products
 
 import ryry.playground.domain.models.Product
-import ryry.playground.persistence.contract.Persistence
+import ryry.playground.system_boundaries.persistence.contract.Persistence
 
 class ProductsLocalDataSource(private val persistence: Persistence) {
 

@@ -1,7 +1,7 @@
 package ryry.playground.system_boundaries.persistence.in_memory.tables
 
 import ryry.playground.domain.models.Product
-import ryry.playground.persistence.contract.ProductPersistence
+import ryry.playground.system_boundaries.persistence.contract.ProductPersistence
 
 class InMemoryProductPersistence : ProductPersistence {
     private val products = mutableListOf<Product>()

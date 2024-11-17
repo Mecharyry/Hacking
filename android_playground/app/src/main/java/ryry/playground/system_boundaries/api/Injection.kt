@@ -7,10 +7,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import ryry.playground.api.apollo.ApolloApi
-import ryry.playground.api.contract.DelegateApi
-import ryry.playground.api.contract.Api
-import ryry.playground.api.retrofit.RetrofitApi
+import ryry.playground.system_boundaries.api.apollo.ApolloApi
+import ryry.playground.system_boundaries.api.contract.DelegateApi
+import ryry.playground.system_boundaries.api.contract.Api
+import ryry.playground.system_boundaries.api.retrofit.RetrofitApi
 import javax.inject.Singleton
 
 @Module

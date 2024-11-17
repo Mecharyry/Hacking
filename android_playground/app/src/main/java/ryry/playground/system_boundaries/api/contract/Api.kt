@@ -1,7 +1,7 @@
 package ryry.playground.system_boundaries.api.contract
 
-import ryry.playground.api.apollo.ApolloApi
-import ryry.playground.api.retrofit.RetrofitApi
+import ryry.playground.system_boundaries.api.apollo.ApolloApi
+import ryry.playground.system_boundaries.api.retrofit.RetrofitApi
 
 interface Api {
     suspend fun userApi(): UserApi
