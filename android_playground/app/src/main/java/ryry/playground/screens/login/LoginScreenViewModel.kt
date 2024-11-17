@@ -15,7 +15,7 @@ class LoginScreenViewModel @Inject constructor(private val appNavigator: AppNavi
     private var _uiState = MutableStateFlow(LoginData("Welcome to Login!"))
     var uiState: StateFlow<LoginData> = _uiState.asStateFlow()
 
-    fun navigateToSplash() = appNavigator.navigateTo(Route.Splash)
+    fun navigateToSplash() = appNavigator.navigateTo(Route.Products)
 }
 
 data class LoginData(val title: String)

@@ -5,7 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 sealed class Route(val direction: String) {
     @Serializable
-    data object Splash : Route("splash")
+    data object Products : Route("products")
+
     @Serializable
     data object Login : Route("login")
 }
