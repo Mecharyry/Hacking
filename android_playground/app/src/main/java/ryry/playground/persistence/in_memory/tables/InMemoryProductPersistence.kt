@@ -6,19 +6,19 @@ import ryry.playground.persistence.contract.ProductPersistence
 class InMemoryProductPersistence : ProductPersistence {
     private val products = mutableListOf<Product>()
 
-    override fun getAll(): List<Product> {
+    override suspend fun getAll(): List<Product> {
         return products
     }
 
-    override fun findById(id: String): Product {
+    override suspend fun findById(id: String): Product {
         return products.first { it.id == id }
     }
 
-    override fun insertAll(vararg products: Product) {
+    override suspend fun insertAll(vararg products: Product) {
         this.products.addAll(products)
     }
 
-    override fun delete(product: Product) {
+    override suspend fun delete(product: Product) {
         products.remove(product)
     }
 }

@@ -1,5 +1,6 @@
 package ryry.playground.screens.products
 
+import android.util.Log
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -28,7 +29,7 @@ import ryry.playground.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductsScreen(
-    viewModel: SplashScreenViewModel = hiltViewModel(),
+    viewModel: ProductsScreenViewModel = hiltViewModel(),
     modifier: Modifier = Modifier,
 ) {
     var filterText by remember { mutableStateOf(TextFieldValue("")) }
