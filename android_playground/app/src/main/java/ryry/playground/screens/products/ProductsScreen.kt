@@ -1,6 +1,5 @@
 package ryry.playground.screens.products
 
-import android.util.Log
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -14,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +35,7 @@ fun ProductsScreen(
     var filterText by remember { mutableStateOf(TextFieldValue("")) }
     val uiState by viewModel.uiState.collectAsState()
 
-    val infiniteTransition = rememberInfiniteTransition()
+    val infiniteTransition = rememberInfiniteTransition(label = "skeletonTransition")
     val color by infiniteTransition.animateColor(
         initialValue = Color.Gray,
         targetValue = Color.LightGray,
@@ -81,111 +81,116 @@ fun ProductsScreen(
             )
         },
         content = { padding ->
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
+            PullToRefreshBox(
+                isRefreshing = uiState is ProductsScreenData.Loading,
+                onRefresh = viewModel::refresh,
             ) {
-                when (uiState) {
-                    is ProductsScreenData.Error -> {
-                        val message = (uiState as ProductsScreenData.Error).message
-                        Box(
-                            modifier = Modifier.fillMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(message)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    when (uiState) {
+                        is ProductsScreenData.Error -> {
+                            val message = (uiState as ProductsScreenData.Error).message
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(message)
+                            }
                         }
-                    }
 
-                    is ProductsScreenData.Loading -> {
-                        LazyColumn {
-                            items(5) {
-                                Card(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                ) {
-                                    Column(
+                        is ProductsScreenData.Loading -> {
+                            LazyColumn {
+                                items(5) {
+                                    Card(
                                         modifier = Modifier
-                                            .padding(16.dp)
-                                            .background(color)
+                                            .fillMaxWidth()
+                                            .padding(8.dp)
                                     ) {
-                                        Box(
+                                        Column(
                                             modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(180.dp)
+                                                .padding(16.dp)
                                                 .background(color)
-                                        )
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(20.dp)
-                                                .background(color)
-                                        )
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(14.dp)
-                                                .background(color)
-                                        )
+                                        ) {
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(180.dp)
+                                                    .background(color)
+                                            )
+                                            Spacer(modifier = Modifier.height(8.dp))
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(20.dp)
+                                                    .background(color)
+                                            )
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            Box(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(14.dp)
+                                                    .background(color)
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
 
-                    is ProductsScreenData.Success -> {
-                        val items = (uiState as ProductsScreenData.Success).data.items
-                        BasicTextField(
-                            value = filterText,
-                            onValueChange = { filterText = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            decorationBox = { innerTextField ->
-                                Box(
-                                    modifier = Modifier
-                                        .background(Color.LightGray, CircleShape)
-                                        .padding(horizontal = 16.dp, vertical = 12.dp)
-                                ) {
-                                    if (filterText.text.isEmpty()) {
-                                        Text("Filter items...", color = Color.Gray)
-                                    }
-                                    innerTextField()
-                                }
-                            }
-                        )
-                        LazyColumn {
-                            items(items.size) { index ->
-                                val item = items[index]
-                                Card(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(8.dp)
-                                ) {
-                                    Column(
-                                        modifier = Modifier.padding(16.dp)
+                        is ProductsScreenData.Success -> {
+                            val items = (uiState as ProductsScreenData.Success).data.items
+                            BasicTextField(
+                                value = filterText,
+                                onValueChange = { filterText = it },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                decorationBox = { innerTextField ->
+                                    Box(
+                                        modifier = Modifier
+                                            .background(Color.LightGray, CircleShape)
+                                            .padding(horizontal = 16.dp, vertical = 12.dp)
                                     ) {
-                                        Image(
-                                            painter = painterResource(id = R.drawable.ic_launcher_background),
-                                            contentDescription = item.title,
-                                            contentScale = ContentScale.Crop,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(180.dp)
-                                        )
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        Text(
-                                            text = item.title,
-                                            style = MaterialTheme.typography.headlineSmall
-                                        )
-                                        Spacer(modifier = Modifier.height(4.dp))
-                                        Text(
-                                            text = item.description,
-                                            style = MaterialTheme.typography.bodyMedium
-                                        )
+                                        if (filterText.text.isEmpty()) {
+                                            Text("Filter items...", color = Color.Gray)
+                                        }
+                                        innerTextField()
+                                    }
+                                }
+                            )
+                            LazyColumn {
+                                items(items.size) { index ->
+                                    val item = items[index]
+                                    Card(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(8.dp)
+                                    ) {
+                                        Column(
+                                            modifier = Modifier.padding(16.dp)
+                                        ) {
+                                            Image(
+                                                painter = painterResource(id = R.drawable.ic_launcher_background),
+                                                contentDescription = item.title,
+                                                contentScale = ContentScale.Crop,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(180.dp)
+                                            )
+                                            Spacer(modifier = Modifier.height(8.dp))
+                                            Text(
+                                                text = item.title,
+                                                style = MaterialTheme.typography.headlineSmall
+                                            )
+                                            Spacer(modifier = Modifier.height(4.dp))
+                                            Text(
+                                                text = item.description,
+                                                style = MaterialTheme.typography.bodyMedium
+                                            )
+                                        }
                                     }
                                 }
                             }

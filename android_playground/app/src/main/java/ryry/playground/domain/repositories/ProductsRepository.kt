@@ -1,5 +1,6 @@
 package ryry.playground.domain.repositories
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,6 +24,7 @@ class ProductsRepository(
 
     suspend fun fetchProducts() {
         _productsFlow.tryEmit(Outcome.Loading())
+        delay(1000)
 
         when (val productsApiOutcome = remoteDataSource.fetchProducts()) {
             is NetworkOutcome.Success -> {

@@ -30,7 +30,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            // 4
             DisposableEffect(key1 = navController) {
                 appNavigator.setController(navController)
                 onDispose {
@@ -40,9 +39,6 @@ class MainActivity : ComponentActivity() {
 
             PlaygroundTheme {
                 NavHost(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
                     navController = navController,
                     startDestination = Route.Products.direction
                 ) {

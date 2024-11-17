@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ryry.playground.domain.models.Outcome
 import ryry.playground.domain.repositories.ProductsRepository
 import ryry.playground.navigation.AppNavigator
@@ -20,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProductsScreenViewModel @Inject constructor(
     private val appNavigator: AppNavigator,
-    productsRepository: ProductsRepository
+    private val productsRepository: ProductsRepository
 ) :
     ViewModel() {
     private var _uiState =
@@ -63,7 +64,13 @@ class ProductsScreenViewModel @Inject constructor(
         }
     }
 
-    fun navigateToLogin() = appNavigator.navigateTo(Route.Login)
+    fun refresh() {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                productsRepository.fetchProducts()
+            }
+        }
+    }
 }
 
 sealed class ProductsScreenData {
