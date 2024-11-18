@@ -41,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil3.compose.AsyncImage
 import ryry.playground.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -189,8 +190,8 @@ fun ProductsScreen(
                                         Column(
                                             modifier = Modifier.padding(16.dp)
                                         ) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.ic_launcher_background),
+                                            AsyncImage(
+                                                model = item.image,
                                                 contentDescription = item.title,
                                                 contentScale = ContentScale.Crop,
                                                 modifier = Modifier

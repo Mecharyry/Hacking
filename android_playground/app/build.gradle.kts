@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 
     kapt(libs.dagger.hilt.compiler)
     ksp(libs.room.compiler)
