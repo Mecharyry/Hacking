@@ -15,7 +15,6 @@ import kotlinx.coroutines.withContext
 import ryry.playground.domain.models.Outcome
 import ryry.playground.domain.repositories.ProductsRepository
 import ryry.playground.navigation.AppNavigator
-import ryry.playground.navigation.Route
 import javax.inject.Inject
 
 @HiltViewModel

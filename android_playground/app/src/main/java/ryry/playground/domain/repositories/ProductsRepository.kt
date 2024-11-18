@@ -24,7 +24,6 @@ class ProductsRepository(
 
     suspend fun fetchProducts() {
         _productsFlow.tryEmit(Outcome.Loading())
-        delay(1000)
 
         when (val productsApiOutcome = remoteDataSource.fetchProducts()) {
             is NetworkOutcome.Success -> {

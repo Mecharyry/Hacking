@@ -1,8 +1,8 @@
 package ryry.playground.system_boundaries.api.retrofit.api
 
 import retrofit2.Retrofit
-import ryry.playground.system_boundaries.api.contract.UserApi
 import ryry.playground.domain.models.User
+import ryry.playground.system_boundaries.api.contract.UserApi
 
 class RetrofitUserApi(retrofit: Retrofit) : UserApi {
 
