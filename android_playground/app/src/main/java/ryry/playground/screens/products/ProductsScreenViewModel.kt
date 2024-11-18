@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import ryry.playground.domain.models.Outcome
-import ryry.playground.domain.repositories.ProductsRepository
+import ryry.playground.domain.use_cases.GetProductsUseCase
 import ryry.playground.navigation.AppNavigator
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductsScreenViewModel @Inject constructor(
     private val appNavigator: AppNavigator,
-    private val productsRepository: ProductsRepository
+    private val productsUseCase: GetProductsUseCase,
 ) :
     ViewModel() {
     private var _uiState =
@@ -29,9 +29,9 @@ class ProductsScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            productsRepository.observeProducts()
+            productsUseCase.observe()
                 .onStart {
-                    productsRepository.fetchProducts()
+                    productsUseCase.fetch()
                 }
                 .flowOn(Dispatchers.IO)
                 .map {
@@ -66,7 +66,7 @@ class ProductsScreenViewModel @Inject constructor(
     fun refresh() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                productsRepository.fetchProducts()
+                productsUseCase.fetch()
             }
         }
     }
